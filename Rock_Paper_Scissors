@@ -1,0 +1,42 @@
+import random
+
+choices = ["Rock", "Paper", "Scissors"]
+
+input_choices = {
+    "r": "Rock",
+    "rock": "Rock",
+    "p": "Paper",
+    "paper": "Paper",
+    "s": "Scissors",
+    "scissors": "Scissors"
+}
+
+def game_start():
+    player_choice = input("Enter your choice (Rock/r, Paper/p, Scissors/s): ").lower()
+    AI_choice = random.choice(choices)
+    while player_choice not in input_choices:
+        player_choice = input("Invalid choice! Try again! (Rock/r, Paper/p, Scissors/s):")
+    
+    player_choice = input_choices[player_choice]
+    WIN_CONDITIONS = [
+        ("Paper", "Rock"), ("Rock", "Scissors"), ("Scissors", "Paper")
+    ]
+
+    print()
+    print(f"You chose: {player_choice}")
+    print(f"AI chose: {AI_choice}")
+
+    if player_choice == AI_choice:
+        print("It's a tie")
+    elif (player_choice, AI_choice) in WIN_CONDITIONS:
+        print("You win! 🎉")
+    else:
+        print("AI wins! 🤖")
+
+    restart_game = input("Would you like to play again? (Y/N): ").upper()
+    if restart_game == "Y":
+        game_start()
+    else:
+        print("Thank's for playing my game!")
+        exit()
+game_start()
