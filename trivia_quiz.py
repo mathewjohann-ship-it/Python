@@ -9,7 +9,7 @@ API_URL_EDUCATIONAL = f"https://opentdb.com/api.php?amount=20&category={EDUCATIO
 API_URL_BOOK = f"https://opentdb.com/api.php?amount=20&category={BOOK_CATEGORGY_ID}&type=multiple"
 API_URL = None
 
-type = int(input("What type of quiz do you want to do:\n1.Educational\n2.Book"))
+type = int(input("What type of quiz do you want to do:\n1.Educational\n2.Book\n"))
 if type == 1:
     API_URL = API_URL_EDUCATIONAL
 else:
@@ -42,8 +42,8 @@ def run_quiz():
         random.shuffle(options)
 
         print(f"Question {i}: {question}")
-        for idx, options in enumerate(options, 1):
-            print(f" {idx}. {options}")
+        for idx, option in enumerate(options, 1):
+            print(f" {idx}. {option}")
         
         while True:
             try:
