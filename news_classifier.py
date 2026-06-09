@@ -21,4 +21,18 @@ def best_topics(preds: list):
 def bar(score: float) -> str:
     pct = score*100
     blocks = int(pct//10)
-    return "@" * blocks + "O" * (10 - blocks)
+    return "█" * blocks + "░" * (10 - blocks)
+
+def show(headline: str, preds: list):
+    top_label, top_score = best_topic(preds)
+    print("\n"+"=" * 60)
+    print("???? News Topic Classifier")
+    print("=" * 60)
+    print("Headline:", headline)
+    print(f"Best topic: {top_label}")
+    print(f"Confidence {round(top_score*100,1)}%[{bar(top_score)}]")
+    print("\nTop 3 guesses:")
+    top3 = sorted(preds, key = lambda x: x["score"], reverse = True)[:3]
+    for i, p in enumerate(top3, start = 1):
+        print(f"{i}. {p['label']:<11} {round(p['score']*100,1)}%[{bar(p['score'])}]")
+    print("=" * 60)
