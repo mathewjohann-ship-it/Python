@@ -24,7 +24,7 @@ def bar(score: float) -> str:
     return "█" * blocks + "░" * (10 - blocks)
 
 def show(headline: str, preds: list):
-    top_label, top_score = best_topic(preds)
+    top_label, top_score = best_topics(preds)
     print("\n"+"=" * 60)
     print("???? News Topic Classifier")
     print("=" * 60)
@@ -36,3 +36,36 @@ def show(headline: str, preds: list):
     for i, p in enumerate(top3, start = 1):
         print(f"{i}. {p['label']:<11} {round(p['score']*100,1)}%[{bar(p['score'])}]")
     print("=" * 60)
+
+
+def main():
+    print("Welcome! Type a news headline and I'll guess the topic.")
+    print("Topics:", ", ".join(TOPICS))
+    print("type 'exit' to stop.\n")
+
+
+    while True:
+        headline = input("Headline: ").strip()
+        if headline.lower() == "exit":
+            print("Bye! Keep coding ????")
+            break
+
+        if not headline:
+            print("Please type a headline (not empty).\n")
+            continue
+
+        try:
+            preds = ask_hf(headline)
+            if isinstance(preds, list) and preds and "label" in preds[0]:
+                show(headline, preds)
+            
+            else:
+                print("Oops! Unexprected reply", preds)
+            
+        except Exception as e:
+            print("\n⚠️ Oops! Something went wrong.")
+            print("Reason:", e)
+            print("Tip: Check HF_API_KEY + internet.\n")
+
+if __name__ == "__main__":
+    main()
