@@ -14,12 +14,26 @@ print(f"Primary model: {MODELS[0]}")
 print("Type 'quit' to exit\n")
 
 while True:
+    type_style = None
+    style = input("What style would you like the image to be?(e.g. ANIMATED, PAINTED):\n")
+    if style.lower() in ["animated", "animation"]:
+        type_style = "animated image."
+    elif style.lower() in ["painted", "paint"]:
+        type_style = "Painted image."
+    elif style.lower() in ["sketched", "sketch", "sketching", "drawn", "drawing"]:
+        type_style = "Sketched image."
+    elif style.lower() in ["real life", "realistic", "real"]:
+        type_style = "Realistic image."
+    else:
+        type_style = ""
+    
     prompt = input("Enter prompt: ").strip()
+
     if prompt.lower() in ["quit", "exit", "q"]:
         break
     if not prompt:
         continue
-
+    prompt += type_style
     print("Generating...")
     image = None
 
