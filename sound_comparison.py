@@ -41,3 +41,32 @@ def analyze_audio(data, rate):
         "max_volume": np.max(np.abs(samples)),
         "samples": samples
     }
+
+def transcribe(data, rate, width):
+    recognizer = sr.Recognizer()
+    try:
+        return recognizer.recognize_google(AudioData(data, rate, width))
+    except:
+        return "[Could not transcribe]"
+
+def display_stats(stats, text, label):
+    print(f"\n{'-'*40}")
+    print(f"???? {label}")
+    print(f"{'-' *40}")
+    print(f"⏱️ Duration: {stats['duration']:.2f} seconds")
+    print(f"???? Avg Amplitude: {stats['avg_volume']:.0f}")
+    print(f"???? Max Amplitude: {stats['max_volume']:.0f}")
+    print(f"???? Transcription: {text}")
+
+def compare(stats1, stats2):
+    print("\n" + "=" * 40)
+    print("???? COMPARISON RESULTS")
+    print("=" * 40)
+    if stats1['duration'] > stats2['duration']:
+        longer = "Recording 1"
+        diff = ((stats1['duration'] - stats2['duration'])/ stats2['duration']) * 100
+    else:
+        longer = "Recording 2"
+        diff = ((stats2['duration'] - stats1['duration'])/ stats1['duration']) * 100
+    print(f"⏱️ {longer} is longer by {diff:.1f}%")
+    
