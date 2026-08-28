@@ -31,3 +31,9 @@ def speech_to_text():
     except sr.RequestError as e:
         print(f"API Error: {e}")
         return ""
+
+def translate_text(text, target_language = "es"):
+    translator = Translator()
+    translation = translator.translate(text, dest=target_language)
+    print(f"???? Translated text: {translation.text}")
+    return translation.text
