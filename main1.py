@@ -27,4 +27,40 @@ def temperature_prompt_activity():
         print(f"\n--- INSTRUCTIONS {i} ---\n{p}")
         print(generate_response(p, temperature=0.7, max_tokens=512))
         time.sleep(1)
-    
+
+    print("\nPART 3: YOUR OWN INSTRUCTION PROMPT")
+    custom = input("Enter your instruction-based prompt: ").strip()
+    try:
+        temp = float(input("Set temperature (0.1 to 1.0): ").strip())
+        if not (0.1 <= temp <= 1.0): raise ValueError
+    except ValueError:
+        print("Invalid temperature. Using 0.7.")
+        temp = 0.7
+
+    print(f"\n--- YOUR PROMPT @ TEMP {temp} ---")
+    print(generate_response(custom, temperature=temp, max_tokens=512))
+
+    print("\nREFLECTION:")
+    print("1) What changed when prompts became more specific?")
+    print("2) What improved when context was added?")
+    print("3) Which prompt felt most useful and why?")
+    print("\nCHALLENGE: Create a prompt chain:")
+    print("Generate content → rewrite with constraints → create a sequel (try different temps).")
+
+def pseudo_stream(text, delay=0.013):
+    for ch in text:
+        print(ch, end="", flush=True)
+        time.sleep(delay)
+    print()
+
+def bonus_stream():
+    choice = input("\nBONUS: streaming-like output? (y/n): ").lower().strip()
+    if choice == "y":
+        p = input("Enter a prompt: ").strip()
+        out = generate_response(p, temperature=0.7, max_tokens=512)
+        print("\nStreaming-like response (not real streaming):")
+        pseudo_stream(out)
+
+if __name__ == "__main__":
+    temperature_prompt_activity()
+    bonus_stream()
